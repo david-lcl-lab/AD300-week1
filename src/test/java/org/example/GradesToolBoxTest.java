@@ -28,6 +28,7 @@ public class GradesToolBoxTest {
         String result = tb.gpaToPctSwitch("2.0");
         assertEquals("76.0% to 75.0%", result);
     }
+    
     @Test
     void gpaToPctSwitchFStudentTest() {
         String result = tb.gpaToPctSwitch("0.0");
