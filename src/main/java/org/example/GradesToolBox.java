@@ -1,5 +1,8 @@
 package org.example;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class GradesToolBox {
 
     public GradesToolBox() {
@@ -14,21 +17,18 @@ public class GradesToolBox {
      * @return the GPA as a String
      */
     public String pctToGpaIf(String pctRange){
-        if(!pctRange.isEmpty()){
-            int percentIndex = pctRange.indexOf('%'); // locates position of 1st % in string
-            int ltIndex = pctRange.indexOf('<'); // locates position of 1st < symbol
-            double pct = -1.0;            
-            try {
-                if (percentIndex != -1) {
-                    pct = Double.parseDouble(pctRange.substring(ltIndex+1, percentIndex-1).trim()); // parse substring between < and %
-                } else {
-                    throw new NumberFormatException();
-                }
-            }
-            catch (NumberFormatException e) {
-                System.out.println("Invalid pct range: " + pctRange);
-            }
 
+        if(!pctRange.isEmpty()){
+            String regex = "to\\s*(\\d+\\.?\\d*)";  // filter digits after 'to'
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(pctRange);
+            double pct;// = -1.0;
+            if (matcher.find()) {                
+                pct = Double.parseDouble(matcher.group(1));
+            }
+            else {
+                throw new NumberFormatException();
+            }            
             if (pct >= 95.0) {
                 return "4.0";
             } else if (pct >= 94.0) {
