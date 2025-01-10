@@ -26,13 +26,13 @@ public class GradesToolBoxTest {
     @Test
     void gpaToPctSwitchCStudentTest() {
         String result = tb.gpaToPctSwitch("2.0");
-        assertEquals("76.0% to 75.0%", result);
+        assertEquals("<76.0% to 75.0%", result);
     }
     
     @Test
     void gpaToPctSwitchFStudentTest() {
         String result = tb.gpaToPctSwitch("0.0");
-        assertEquals("65.0% to 0%", result);
+        assertEquals("<65.0% to 0%", result);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class GradesToolBoxTest {
     }
 
     @Test
-    void GpaToPctOverflowSwitchTest() {
+    void gpaToPctOverflowSwitchTest() {
        assertThrows(NumberFormatException.class, () ->tb.gpaToPctSwitch("\u221E")); //infinity
     }
 
@@ -52,26 +52,32 @@ public class GradesToolBoxTest {
 
     @Test
     void pctToGpaIfDecimalTest(){
-        double result = tb.pctToGpaIf("95.1%");
-        assertEquals(4.0, result, 0.1);
+        String result = tb.pctToGpaIf("95.1%");
+        assertEquals("4.0", result);
     }
 
     @Test
     void pctToGpaIfBTest(){
-        double result = tb.pctToGpaIf("80.0%");
-        assertEquals(2.5, result, 0.1);
+        String result = tb.pctToGpaIf("80.0%");
+        assertEquals("2.5", result);
+    }
+
+    @Test
+    void pctToGpaIfFTest(){
+        String result = tb.pctToGpaIf("<65.0% to 0%");
+        assertEquals("0.0", result);
     }
 
     @Test
     void pctToGpaIfWhiteSpaceTest() {
-       double result = tb.pctToGpaIf("100 % to 95.0%");
-       assertEquals(4.0, result, 0.1);
+       String result = tb.pctToGpaIf("100 % to 95.0%");
+       assertEquals("4.0", result);
     }
 
     @Test
     void pctToGpaIfLineBreakTest() {
-        double result = tb.pctToGpaIf(" 70.0 %\n" + "\t\n" + "to 69.0%");
-        assertEquals(1.5, result, 0.1);
+        String result = tb.pctToGpaIf("<70.0 %\n" + "\t\n" + "to 69.0%");
+        assertEquals("1.5", result);
     }
 
     @Test

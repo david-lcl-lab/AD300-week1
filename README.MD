@@ -6,7 +6,7 @@ Build using maven
 `mvn compile`
 
 Run using maven
-` mvn exec:java -Dexec.mainClass="org.example.Main"`
+`mvn exec:java -Dexec.mainClass="org.example.Main"`
 
 ## Tests
 Junit is used for test cases.
