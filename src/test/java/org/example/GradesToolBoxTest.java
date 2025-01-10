@@ -51,20 +51,20 @@ public class GradesToolBoxTest {
     }
 
     @Test
-    void pctToGpaIfDecimalTest(){
-        String result = tb.pctToGpaIf("95.1%");
+    void pctToGpaIfATest(){
+        String result = tb.pctToGpaIf("< 95.0 %\n" + "\t\n" + "to 94.0%");
         assertEquals("4.0", result);
     }
 
     @Test
     void pctToGpaIfBTest(){
-        String result = tb.pctToGpaIf("80.0%");
-        assertEquals("2.5", result);
+        String result = tb.pctToGpaIf("< 80.0 %\n" + "\t\n" + "to 79.0%");
+        assertEquals("2.4", result);
     }
 
     @Test
     void pctToGpaIfFTest(){
-        String result = tb.pctToGpaIf("<65.0% to 0%");
+        String result = tb.pctToGpaIf("< 65.0 %\n" + "\t\n" + "to 0.0%");
         assertEquals("0.0", result);
     }
 
@@ -75,9 +75,9 @@ public class GradesToolBoxTest {
     }
 
     @Test
-    void pctToGpaIfLineBreakTest() {
-        String result = tb.pctToGpaIf("<70.0 %\n" + "\t\n" + "to 69.0%");
-        assertEquals("1.5", result);
+    void pctToGpaIfMissingLineBreakTest() {
+        String result = tb.pctToGpaIf("<70.0 % to 69.0%");
+        assertEquals("1.4", result);
     }
 
     @Test
